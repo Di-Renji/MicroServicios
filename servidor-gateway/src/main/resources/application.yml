@@ -1,0 +1,21 @@
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enable:
+      routes:
+        - id: servicio-empresa
+          uri: lb://servicio-empresa
+          predicates:
+            - Path=/api/empresa/**
+            - Header=token,123456
+            - Method=GET,POST
+          filters:
+            - StripPrefix=1
+        - id: servicio-organizacion
+          uri: lb://servicio-organizacion
+          predicates:
+            - Path=/api/organizacion/**
+          filters:
+            - StripPrefix=2
